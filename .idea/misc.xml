@@ -5,6 +5,7 @@
       <map>
         <entry key="app/src/main/res/drawable/ic_baseline_backspace_24.xml" value="0.18385416666666668" />
         <entry key="app/src/main/res/drawable/ic_baseline_clear_24.xml" value="0.2520833333333333" />
+        <entry key="app/src/main/res/drawable/shape_digit_button.xml" value="0.2777777777777778" />
         <entry key="app/src/main/res/drawable/shape_fun_button.xml" value="0.2520833333333333" />
         <entry key="app/src/main/res/drawable/shape_main_button.xml" value="0.2520833333333333" />
         <entry key="app/src/main/res/drawable/shape_oper_button.xml" value="0.2520833333333333" />

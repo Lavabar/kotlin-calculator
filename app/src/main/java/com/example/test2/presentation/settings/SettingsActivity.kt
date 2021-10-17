@@ -1,10 +1,11 @@
-package com.example.test2
+package com.example.test2.presentation.settings
 
-import BaseActivity
+import com.example.test2.presentation.common.BaseActivity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.Toast
+import com.example.test2.R
 
 
 class SettingsActivity : BaseActivity() {

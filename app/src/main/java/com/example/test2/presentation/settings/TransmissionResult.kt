@@ -1,4 +1,4 @@
-package com.example.test2
+package com.example.test2.presentation.settings
 
 import android.content.Context
 import android.content.Intent

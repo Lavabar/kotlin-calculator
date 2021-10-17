@@ -16,12 +16,24 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
     <LinearLayout
+        android:id="@+id/work_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         app:layout_constraintBottom_toBottomOf="parent"
         android:orientation="vertical">
 
+        <EditText
+            android:id="@+id/input_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:textColor="@color/white"
+            android:layout_marginStart="24dp"
+            android:inputType="number"
+            android:importantForAutofill="no"
+            android:background="@null"
+            android:fontFamily="@font/opensans_light"
+            />
         <TextView
             android:id="@+id/output_text_view"
             android:layout_width="match_parent"
@@ -43,10 +55,8 @@
 
             <ImageView
                 android:id="@+id/main_back"
-
                 style="@style/FunctionButton"
                 android:layout_weight="1"
-
                 android:contentDescription="@string/back"
                 app:srcCompat="@drawable/ic_baseline_backspace_24"
                 android:scaleType="center"/>
