@@ -71,7 +71,8 @@
                 android:id="@+id/main_divide"
                 style="@style/OperationButton"
                 android:layout_weight="1"
-                android:text="@string/divider"/>
+                android:text="@string/divider"
+                android:contentDescription="@string/divider"/>
 
         </LinearLayout>
         <LinearLayout
@@ -137,7 +138,8 @@
                 android:id="@+id/main_minus"
                 style="@style/OperationButton"
                 android:layout_weight="1"
-                android:text="@string/minus"/>
+                android:text="@string/minus"
+                android:contentDescription="@string/minus"/>
 
         </LinearLayout>
         <LinearLayout
@@ -168,7 +170,8 @@
                 android:id="@+id/main_plus"
                 style="@style/OperationButton"
                 android:layout_weight="1"
-                android:text="@string/plus"/>
+                android:text="@string/plus"
+                android:contentDescription="@string/plus"/>
 
         </LinearLayout>
         <LinearLayout

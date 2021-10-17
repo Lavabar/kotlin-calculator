@@ -35,6 +35,16 @@ class MainActivity : BaseActivity() {
         viewBinding.mainEquals.setOnClickListener {
             viewModel.onResultClick()
         }
+
+        listOf(
+            viewBinding.mainPlus,
+            viewBinding.mainMinus,
+            viewBinding.mainMultiply,
+            viewBinding.mainDivide
+        ).forEach { operationView ->
+            operationView.setOnClickListener { viewModel.onOperationClick(operationView.contentDescription.toString()) }
+        }
+
         viewBinding.mainClear.setOnClickListener {
             viewModel.onClearClick()
         }
