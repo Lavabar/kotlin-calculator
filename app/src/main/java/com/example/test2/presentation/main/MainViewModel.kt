@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.test2.data.calculateExpression
 
 class MainViewModel: ViewModel() {
 
@@ -16,20 +17,19 @@ class MainViewModel: ViewModel() {
 
     private val _calcState = MutableLiveData<String>()
 
-    private fun calculateExpression(): String {
-
-        var res: Double = 0.0
-
-        return res.toString()
-    }
-
     fun onNumberClick(number: Int) {
-        expression += number.toString()
-        _expressionState.value = expression
+        if (expression != "Infinity") {
+            expression += number.toString()
+            _expressionState.value = expression
+        } else {
+            expression = number.toString()
+            _expressionState.value = expression
+            _resultState.value = ""
+        }
     }
 
     fun onResultClick() {
-        _calcState.value = calculateExpression()
+        _calcState.value = calculateExpression(expression)
         expression = _calcState.value.toString()
         _expressionState.value = expression
         _resultState.value = expression
@@ -40,10 +40,12 @@ class MainViewModel: ViewModel() {
     }
 
     fun onOperationClick(operation: String) {
-        _calcState.value = calculateExpression()
-        _resultState.value = _calcState.value
-        expression += operation
-        _expressionState.value = expression
+        if (expression.last().isDigit()) {
+            _calcState.value = calculateExpression(expression)
+            _resultState.value = _calcState.value
+            expression += operation
+            _expressionState.value = expression
+        }
     }
 
     override fun onCleared() {
