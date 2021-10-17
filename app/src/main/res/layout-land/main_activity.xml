@@ -14,7 +14,8 @@
 
         android:text="@string/settings_btn"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent"
+        android:visibility="invisible"/>
     <LinearLayout
         android:id="@+id/work_field"
         android:layout_width="match_parent"
@@ -42,14 +43,19 @@
             app:layout_constraintBottom_toTopOf="@id/row1">
 
             <TextView
+                android:id="@+id/main_equals"
+                style="@style/LandButton.Operation"
+                android:layout_weight="1"
+                android:text="@string/equals"/>
+            <TextView
                 android:id="@+id/main_clear"
-                style="@style/Button.Function"
+                style="@style/LandButton.Function"
                 android:layout_weight="1"
                 android:text="@string/clear_space"/>
 
             <ImageView
                 android:id="@+id/main_back"
-                style="@style/Button.Function"
+                style="@style/LandButton.Function"
                 android:layout_weight="1"
                 android:contentDescription="@string/back"
                 app:srcCompat="@drawable/ic_baseline_backspace_24"
@@ -57,13 +63,13 @@
 
             <TextView
                 android:id="@+id/main_memorize"
-                style="@style/Button.Function"
+                style="@style/LandButton.Function"
                 android:layout_weight="1"
                 android:text="@string/memo_button"/>
 
             <TextView
                 android:id="@+id/main_divide"
-                style="@style/Button.Operation"
+                style="@style/LandButton.Operation"
                 android:layout_weight="1"
                 android:text="@string/divider"
                 android:contentDescription="@string/divider"/>
@@ -77,25 +83,30 @@
             app:layout_constraintBottom_toTopOf="@id/row2">
 
             <TextView
+                android:id="@+id/main_point"
+                style="@style/LandButton.Digit"
+                android:layout_weight="1"
+                android:text="@string/dot"/>
+            <TextView
                 android:id="@+id/main_seven"
-                style="@style/Button.Digit"
+                style="@style/LandButton.Digit"
                 android:layout_weight="1"
                 android:text="@string/_7"/>
             <TextView
                 android:id="@+id/main_eight"
-                style="@style/Button.Digit"
+                style="@style/LandButton.Digit"
                 android:layout_weight="1"
                 android:text="@string/_8"/>
 
             <TextView
                 android:id="@+id/main_nine"
-                style="@style/Button.Digit"
+                style="@style/LandButton.Digit"
                 android:layout_weight="1"
                 android:text="@string/_9"/>
 
             <ImageView
                 android:id="@+id/main_multiply"
-                style="@style/Button.Operation"
+                style="@style/LandButton.Operation"
                 android:layout_weight="1"
 
                 android:contentDescription="@string/multiply"
@@ -112,25 +123,30 @@
             app:layout_constraintBottom_toTopOf="@id/row3">
 
             <TextView
+                android:id="@+id/main_zero"
+                style="@style/LandButton.Digit"
+                android:layout_weight="1"
+                android:text="@string/_0"/>
+            <TextView
                 android:id="@+id/main_four"
-                style="@style/Button.Digit"
+                style="@style/LandButton.Digit"
                 android:layout_weight="1"
                 android:text="@string/_4"/>
             <TextView
                 android:id="@+id/main_five"
-                style="@style/Button.Digit"
+                style="@style/LandButton.Digit"
                 android:layout_weight="1"
                 android:text="@string/_5"/>
 
             <TextView
                 android:id="@+id/main_six"
-                style="@style/Button.Digit"
+                style="@style/LandButton.Digit"
                 android:layout_weight="1"
                 android:text="@string/_6"/>
 
             <TextView
                 android:id="@+id/main_minus"
-                style="@style/Button.Operation"
+                style="@style/LandButton.Operation"
                 android:layout_weight="1"
                 android:text="@string/minus"
                 android:contentDescription="@string/minus"/>
@@ -144,56 +160,35 @@
             app:layout_constraintBottom_toTopOf="@id/row4">
 
             <TextView
+                android:layout_weight="1"
+                android:layout_height="0dp"
+                android:layout_width="0dp"/>
+            <TextView
                 android:id="@+id/main_one"
-                style="@style/Button.Digit"
+                style="@style/LandButton.Digit"
                 android:layout_weight="1"
                 android:text="@string/_1"/>
             <TextView
                 android:id="@+id/main_two"
-                style="@style/Button.Digit"
+                style="@style/LandButton.Digit"
                 android:layout_weight="1"
                 android:text="@string/_2"/>
 
             <TextView
                 android:id="@+id/main_three"
-                style="@style/Button.Digit"
+                style="@style/LandButton.Digit"
                 android:layout_weight="1"
                 android:text="@string/_3"/>
 
             <TextView
                 android:id="@+id/main_plus"
-                style="@style/Button.Operation"
+                style="@style/LandButton.Operation"
                 android:layout_weight="1"
                 android:text="@string/plus"
                 android:contentDescription="@string/plus"/>
 
         </LinearLayout>
-        <LinearLayout
-            android:id="@+id/row4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent">
 
-            <TextView
-                android:id="@+id/main_zero"
-                style="@style/Button.Digit"
-                android:layout_weight="2"
-                android:text="@string/_0"/>
-
-            <TextView
-                android:id="@+id/main_point"
-                style="@style/Button.Digit"
-                android:layout_weight="1"
-                android:text="@string/dot"/>
-
-            <TextView
-                android:id="@+id/main_equals"
-                style="@style/Button.Operation"
-                android:layout_weight="1"
-                android:text="@string/equals"/>
-
-        </LinearLayout>
 
     </LinearLayout>
 
