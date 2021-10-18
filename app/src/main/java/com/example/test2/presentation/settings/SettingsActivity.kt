@@ -4,15 +4,25 @@ import android.app.AlertDialog
 import com.example.test2.presentation.common.BaseActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.test2.R
 import com.example.test2.databinding.SettingsActivityBinding
+import com.example.test2.di.SettingsDaoProvider
+import com.example.test2.domain.entity.ResultPanelType
 
 
 class SettingsActivity : BaseActivity() {
 
     private val viewBinding by viewBinding(SettingsActivityBinding::bind)
-    private val viewModel: SettingsViewModel by viewModels()
+    private val viewModel by viewModels<SettingsViewModel> {
+        object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                return SettingsViewModel(SettingsDaoProvider.getDao(this@SettingsActivity)) as T
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,8 +35,6 @@ class SettingsActivity : BaseActivity() {
         }
 
         viewBinding.resultPanel.setOnClickListener {
-            //viewModel.onResultPanelClick()
-            //Toast.makeText(this, "Click", Toast.LENGTH_SHORT).show()
             viewModel.onResultPanelClick()
         }
         viewModel.resultPanelState.observe(this) { state ->

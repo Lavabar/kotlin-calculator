@@ -4,9 +4,15 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.test2.data.calculateExpression
+import com.example.test2.domain.SettingsDao
+import com.example.test2.domain.entity.ResultPanelType
+import kotlinx.coroutines.launch
 
-class MainViewModel: ViewModel() {
+class MainViewModel (
+    private val settingsDao: SettingsDao
+        ): ViewModel() {
 
     private var expression: String = ""
     private val _expressionState = MutableLiveData<String>()
@@ -15,7 +21,16 @@ class MainViewModel: ViewModel() {
     private val _resultState = MutableLiveData<String>()
     val resultState: LiveData<String> = _resultState
 
+    private val _resultPanelState = MutableLiveData<ResultPanelType>()
+    val resultPanelState: LiveData<ResultPanelType> = _resultPanelState
+
     private val _calcState = MutableLiveData<String>()
+
+    init {
+        viewModelScope.launch {
+            _resultPanelState.value = settingsDao.getResultPanelType()
+        }
+    }
 
     fun onNumberClick(number: Int) {
         if (expression != "Infinity") {
@@ -63,5 +78,11 @@ class MainViewModel: ViewModel() {
     override fun onCleared() {
         super.onCleared()
         Log.d("MainViewModel", "onCleared")
+    }
+
+    fun onStart() {
+        viewModelScope.launch {
+            _resultPanelState.value = settingsDao.getResultPanelType()
+        }
     }
 }

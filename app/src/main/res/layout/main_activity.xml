@@ -32,7 +32,9 @@
             android:id="@+id/output_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/CalcViewField"/>
+            style="@style/CalcViewField"
+            android:gravity="end|center_vertical"
+            tools:text="1232"/>
 
         <LinearLayout
             android:id="@+id/row0"

@@ -1,4 +1,4 @@
-package com.example.test2.presentation.settings
+package com.example.test2.domain.entity
 
 enum class ResultPanelType {
     LEFT, RIGHT, HIDE
