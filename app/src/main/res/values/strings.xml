@@ -23,4 +23,12 @@
     <string name="output">32423</string>
     <string name="result_panel">Result panel</string>
     <string name="settings_title">Settings</string>
+    <string name="settings_result_ok">Ok</string>
+    <string name="settings_result_cancel">Cancel</string>
+    <string name="result_panel_dialog_title">Result Panel</string>
+    <string-array name="result_panel_types">
+        <item>On the left</item>
+        <item>On the right</item>
+        <item>Hidden</item>
+    </string-array>
 </resources>
