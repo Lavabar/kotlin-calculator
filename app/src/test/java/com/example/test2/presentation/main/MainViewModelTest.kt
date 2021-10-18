@@ -23,4 +23,13 @@ class MainViewModelTest {
 
         Assert.assertEquals("4", viewModel.resultState.value)
     }
+
+    @Test
+    fun testPoint() {
+        val viewModel = MainViewModel()
+
+        viewModel.onPointClick()
+
+        Assert.assertEquals(null, viewModel.resultState.value)
+    }
 }

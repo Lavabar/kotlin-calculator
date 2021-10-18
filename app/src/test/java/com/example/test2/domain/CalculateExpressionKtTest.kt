@@ -76,4 +76,12 @@ class CalculateExpressionKtTest {
 
         Assert.assertEquals(result, calculateExpression(expression))
     }
+
+    @Test
+    fun testPointNumber() {
+        val expression = "6.*4"
+        val result = "24"
+
+        Assert.assertEquals(result, calculateExpression(expression))
+    }
 }

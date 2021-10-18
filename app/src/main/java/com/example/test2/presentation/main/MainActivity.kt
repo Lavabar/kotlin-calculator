@@ -64,6 +64,14 @@ class MainActivity : BaseActivity() {
             textView.setOnClickListener { viewModel.onNumberClick(index) }
         }
 
+        viewBinding.mainBack.setOnClickListener {
+            viewModel.onBackClick()
+        }
+
+        viewBinding.mainPoint.setOnClickListener {
+            viewModel.onPointClick()
+        }
+
         viewModel.expressionState.observe(this) { state ->
             viewBinding.inputEdit.setText(state)
         }

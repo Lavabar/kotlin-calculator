@@ -40,10 +40,22 @@ class MainViewModel: ViewModel() {
     }
 
     fun onOperationClick(operation: String) {
-        if (expression.last().isDigit()) {
+        if (expression.isNotBlank() && (expression.last().isDigit() || expression.endsWith("."))) {
             _calcState.value = calculateExpression(expression)
             _resultState.value = _calcState.value
             expression += operation
+            _expressionState.value = expression
+        }
+    }
+
+    fun onBackClick() {
+        expression = expression.dropLast(1)
+        _expressionState.value = expression
+    }
+
+    fun onPointClick() {
+        if (expression.isNotBlank() && expression.last().isDigit()) {
+            expression += "."
             _expressionState.value = expression
         }
     }
