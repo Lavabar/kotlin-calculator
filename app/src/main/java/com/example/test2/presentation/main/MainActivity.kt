@@ -1,24 +1,18 @@
 package com.example.test2.presentation.main
 
+import android.content.Intent
 import com.example.test2.presentation.common.BaseActivity
 import android.os.Bundle
-import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.test2.R
-import com.example.test2.presentation.settings.TransmissionResult
 import com.example.test2.databinding.MainActivityBinding
+import com.example.test2.presentation.settings.SettingsActivity
 
 class MainActivity : BaseActivity() {
 
     private val viewModel: MainViewModel by viewModels()
     private val viewBinding by viewBinding(MainActivityBinding::bind)
-
-    private val getTransmissionResult : ActivityResultLauncher<Int> =
-        registerForActivityResult(TransmissionResult()) { result ->
-            Toast.makeText(this, "res is $result", Toast.LENGTH_SHORT).show()
-        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,7 +75,7 @@ class MainActivity : BaseActivity() {
 
     }
     private fun openSettings() {
-        getTransmissionResult.launch(100)
+        startActivity(Intent(this, SettingsActivity::class.java))
     }
 }
 
