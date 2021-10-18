@@ -21,4 +21,6 @@
     <string name="_7">7</string>
     <string name="divider">/</string>
     <string name="output">32423</string>
+    <string name="result_panel">Result panel</string>
+    <string name="settings_title">Settings</string>
 </resources>
