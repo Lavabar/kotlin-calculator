@@ -1,9 +1,9 @@
 package com.example.test2.presentation.main
 
 import android.content.Intent
-import com.example.test2.presentation.common.BaseActivity
 import android.os.Bundle
 import android.view.Gravity
+import androidx.activity.result.launch
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModel
@@ -11,9 +11,11 @@ import androidx.lifecycle.ViewModelProvider
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.test2.R
 import com.example.test2.databinding.MainActivityBinding
+import com.example.test2.di.HistoryRepositoryProvider
 import com.example.test2.di.SettingsDaoProvider
 import com.example.test2.domain.entity.ResultPanelType
-import com.example.test2.presentation.history.HistoryActivity
+import com.example.test2.presentation.common.BaseActivity
+import com.example.test2.presentation.history.HistoryResult
 import com.example.test2.presentation.settings.SettingsActivity
 
 class MainActivity : BaseActivity() {
@@ -22,11 +24,15 @@ class MainActivity : BaseActivity() {
     private val viewModel by viewModels<MainViewModel> {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return MainViewModel(SettingsDaoProvider.getDao(this@MainActivity)) as T
+                return MainViewModel(SettingsDaoProvider.getDao(this@MainActivity),
+                HistoryRepositoryProvider.get(this@MainActivity)) as T
             }
         }
     }
 
+    private val resultLauncher = registerForActivityResult(HistoryResult()) { item ->
+        viewModel.onHistoryResult(item)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
@@ -108,7 +114,7 @@ class MainActivity : BaseActivity() {
         viewModel.onStart()
     }
     private fun openHistory() {
-        startActivity(Intent(this, HistoryActivity::class.java))
+        resultLauncher.launch()
     }
     private fun openSettings() {
         startActivity(Intent(this, SettingsActivity::class.java))

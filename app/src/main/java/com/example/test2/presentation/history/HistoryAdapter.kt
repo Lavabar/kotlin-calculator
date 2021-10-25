@@ -37,6 +37,6 @@ class HistoryAdapter(
 
     override fun getItemCount(): Int = data.size
 
-    class HistoryViewHolder(val bindings: HistoryItemBinding): RecyclerView.ViewHolder(bindings.root) {}
+    class HistoryViewHolder(val bindings: HistoryItemBinding): RecyclerView.ViewHolder(bindings.root)
 }
 

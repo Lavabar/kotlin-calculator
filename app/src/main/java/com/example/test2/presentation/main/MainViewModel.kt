@@ -5,13 +5,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.test2.data.HistoryRepositoryImpl
 import com.example.test2.data.calculateExpression
+import com.example.test2.domain.HistoryRepository
 import com.example.test2.domain.SettingsDao
+import com.example.test2.domain.entity.HistoryItem
 import com.example.test2.domain.entity.ResultPanelType
 import kotlinx.coroutines.launch
 
 class MainViewModel (
-    private val settingsDao: SettingsDao
+    private val settingsDao: SettingsDao,
+    private val historyRepository: HistoryRepository
         ): ViewModel() {
 
     private var expression: String = ""
@@ -44,7 +48,11 @@ class MainViewModel (
     }
 
     fun onResultClicked() {
-        _calcState.value = calculateExpression(expression)
+        val result = calculateExpression(expression)
+        viewModelScope.launch {
+            historyRepository.add(HistoryItem(expression, result))
+        }
+        _calcState.value = result
         expression = _calcState.value.toString()
         _expressionState.value = expression
         _resultState.value = expression
@@ -83,6 +91,14 @@ class MainViewModel (
     fun onStart() {
         viewModelScope.launch {
             _resultPanelState.value = settingsDao.getResultPanelType()
+        }
+    }
+
+    fun onHistoryResult(item: HistoryItem?) {
+        if (item != null) {
+            expression = item.expression
+            _expressionState.value = expression
+            _resultState.value = item.result
         }
     }
 }
