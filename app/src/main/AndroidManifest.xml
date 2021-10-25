@@ -20,6 +20,9 @@
 
         <activity android:name=".presentation.settings.SettingsActivity"
             android:exported="false"/>
+
+        <activity android:name=".presentation.history.HistoryActivity"
+            android:exported="false"/>
     </application>
 
 </manifest>

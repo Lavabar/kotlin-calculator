@@ -32,7 +32,7 @@ class MainViewModel (
         }
     }
 
-    fun onNumberClick(number: Int) {
+    fun onNumberClicked(number: Int) {
         if (expression != "Infinity") {
             expression += number.toString()
             _expressionState.value = expression
@@ -43,18 +43,18 @@ class MainViewModel (
         }
     }
 
-    fun onResultClick() {
+    fun onResultClicked() {
         _calcState.value = calculateExpression(expression)
         expression = _calcState.value.toString()
         _expressionState.value = expression
         _resultState.value = expression
     }
 
-    fun onClearClick() {
+    fun onClearClicked() {
         _resultState.value = ""
     }
 
-    fun onOperationClick(operation: String) {
+    fun onOperationClicked(operation: String) {
         if (expression.isNotBlank() && (expression.last().isDigit() || expression.endsWith("."))) {
             _calcState.value = calculateExpression(expression)
             _resultState.value = _calcState.value
@@ -63,12 +63,12 @@ class MainViewModel (
         }
     }
 
-    fun onBackClick() {
+    fun onBackClicked() {
         expression = expression.dropLast(1)
         _expressionState.value = expression
     }
 
-    fun onPointClick() {
+    fun onPointClicked() {
         if (expression.isNotBlank() && expression.last().isDigit()) {
             expression += "."
             _expressionState.value = expression

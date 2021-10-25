@@ -13,8 +13,8 @@ import com.example.test2.R
 import com.example.test2.databinding.MainActivityBinding
 import com.example.test2.di.SettingsDaoProvider
 import com.example.test2.domain.entity.ResultPanelType
+import com.example.test2.presentation.history.HistoryActivity
 import com.example.test2.presentation.settings.SettingsActivity
-import com.example.test2.presentation.settings.SettingsViewModel
 
 class MainActivity : BaseActivity() {
 
@@ -39,8 +39,12 @@ class MainActivity : BaseActivity() {
             openSettings()
         }
 
+        viewBinding.mainActivityHistory.setOnClickListener {
+            openHistory()
+        }
+
         viewBinding.mainEquals.setOnClickListener {
-            viewModel.onResultClick()
+            viewModel.onResultClicked()
         }
 
         listOf(
@@ -49,11 +53,11 @@ class MainActivity : BaseActivity() {
             viewBinding.mainMultiply,
             viewBinding.mainDivide
         ).forEach { operationView ->
-            operationView.setOnClickListener { viewModel.onOperationClick(operationView.contentDescription.toString()) }
+            operationView.setOnClickListener { viewModel.onOperationClicked(operationView.contentDescription.toString()) }
         }
 
         viewBinding.mainClear.setOnClickListener {
-            viewModel.onClearClick()
+            viewModel.onClearClicked()
         }
 
         listOf(
@@ -68,15 +72,15 @@ class MainActivity : BaseActivity() {
             viewBinding.mainEight,
             viewBinding.mainNine
         ).forEachIndexed { index, textView ->
-            textView.setOnClickListener { viewModel.onNumberClick(index) }
+            textView.setOnClickListener { viewModel.onNumberClicked(index) }
         }
 
         viewBinding.mainBack.setOnClickListener {
-            viewModel.onBackClick()
+            viewModel.onBackClicked()
         }
 
         viewBinding.mainPoint.setOnClickListener {
-            viewModel.onPointClick()
+            viewModel.onPointClicked()
         }
 
         viewModel.expressionState.observe(this) { state ->
@@ -102,6 +106,9 @@ class MainActivity : BaseActivity() {
     override fun onStart() {
         super.onStart()
         viewModel.onStart()
+    }
+    private fun openHistory() {
+        startActivity(Intent(this, HistoryActivity::class.java))
     }
     private fun openSettings() {
         startActivity(Intent(this, SettingsActivity::class.java))

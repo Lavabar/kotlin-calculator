@@ -79,7 +79,7 @@
 
     <!--Source: https://stackoverflow.com/q/33061050 -->
     <style name="SelectableItemTheme">
-        <item name="colorControlHighlight">@color/light_gray</item>
+        <item name="colorControlHighlight">@color/gray</item>
     </style>
     <style name="SelectableItemBackground">
         <item name="android:theme">@style/SelectableItemTheme</item>

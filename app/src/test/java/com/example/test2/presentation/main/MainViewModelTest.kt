@@ -4,10 +4,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.test2.domain.SettingsDao
 import com.example.test2.domain.entity.ResultPanelType
 import org.junit.Assert
-import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
-import java.lang.AssertionError
 
 class MainViewModelTest {
 
@@ -19,10 +17,10 @@ class MainViewModelTest {
     fun testPlus() {
         val viewModel = MainViewModel(settingsDao)
 
-        viewModel.onNumberClick(2)
-        viewModel.onOperationClick("+")
-        viewModel.onNumberClick(2)
-        viewModel.onResultClick()
+        viewModel.onNumberClicked(2)
+        viewModel.onOperationClicked("+")
+        viewModel.onNumberClicked(2)
+        viewModel.onResultClicked()
 
         Assert.assertEquals("4", viewModel.resultState.value)
     }
@@ -31,7 +29,7 @@ class MainViewModelTest {
     fun testPoint() {
         val viewModel = MainViewModel(settingsDao)
 
-        viewModel.onPointClick()
+        viewModel.onPointClicked()
 
         Assert.assertEquals(null, viewModel.resultState.value)
     }
