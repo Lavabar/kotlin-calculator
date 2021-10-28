@@ -1,9 +1,7 @@
 package com.example.test2.data.db.history
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
+import com.example.test2.data.db.typeConverters.LocalDateTimeConverter
 
 @Dao
 interface HistoryItemDao {
