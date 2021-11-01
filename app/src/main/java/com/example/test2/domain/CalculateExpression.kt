@@ -1,32 +1,31 @@
 package com.example.test2.data
 
-import android.icu.number.Notation
 import com.fathzer.soft.javaluator.DoubleEvaluator
-import java.lang.Math.floor
-import kotlin.math.roundToInt
+import java.math.BigDecimal
+import java.math.MathContext
 
-/**
- * Рассчитывает значение выражения [expression]
- */
+class CalculateExpression {
 
-fun calculateExpression(expression: String): String {
+    private val mc = MathContext(5)
+    private val evaluator = DoubleEvaluator(DoubleEvaluator.getDefaultParameters(), true)
 
-    var preparedExpression: String = expression
+    /**
+     * Рассчитывает значение выражения [expression]
+     */
+    fun calculateExpression(expression: String): String {
 
-    if (expression.isBlank()) return ""
+        var preparedExpression: String = expression
 
-    when {
-        expression.endsWith("+") -> preparedExpression = "(" + expression.dropLast(1) + ")*2"
-        expression.endsWith("-") -> preparedExpression = "0"
-        expression.endsWith("*") -> preparedExpression = "(" + expression.dropLast(1) + ")^2"
-        expression.endsWith("/") -> preparedExpression = "1"
-    }
+        if (expression.isBlank()) return ""
 
-    val result = DoubleEvaluator().evaluate(preparedExpression)
+        when {
+            expression.endsWith("+") -> preparedExpression = "(" + expression.dropLast(1) + ")*2"
+            expression.endsWith("-") -> preparedExpression = "0"
+            expression.endsWith("*") -> preparedExpression = "(" + expression.dropLast(1) + ")^2"
+            expression.endsWith("/") -> preparedExpression = "1"
+        }
+        val result = BigDecimal(evaluator.evaluate(preparedExpression), mc)
 
-    return if (result.roundToInt().toDouble() == result) {
-        result.toInt().toString()
-    } else {
-        result.toString()
+        return result.toString();
     }
 }

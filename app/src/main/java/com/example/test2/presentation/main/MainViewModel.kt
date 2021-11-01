@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.test2.data.calculateExpression
+import com.example.test2.data.CalculateExpression
 import com.example.test2.domain.HistoryRepository
 import com.example.test2.domain.SettingsDao
 import com.example.test2.domain.entity.HistoryItem
@@ -29,6 +29,8 @@ class MainViewModel (
 
     private val _calcState = MutableLiveData<String>()
 
+    private val calculator = CalculateExpression()
+
     init {
         viewModelScope.launch {
             _resultPanelState.value = settingsDao.getResultPanelType()
@@ -47,7 +49,7 @@ class MainViewModel (
     }
 
     fun onResultClicked() {
-        val result = calculateExpression(expression)
+        val result = calculator.calculateExpression(expression)
         viewModelScope.launch {
             historyRepository.add(HistoryItem(expression, result))
         }
@@ -63,7 +65,7 @@ class MainViewModel (
 
     fun onOperationClicked(operation: String) {
         if (expression.isNotBlank() && (expression.last().isDigit() || expression.endsWith("."))) {
-            _calcState.value = calculateExpression(expression)
+            _calcState.value = calculator.calculateExpression(expression)
             _resultState.value = _calcState.value
             expression += operation
             _expressionState.value = expression

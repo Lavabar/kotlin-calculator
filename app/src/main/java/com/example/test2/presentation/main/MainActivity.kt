@@ -37,11 +37,6 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
 
-        /*viewBinding.inputEdit.apply {
-            showSoftInputOnFocus = false
-            isCursorVisible = false
-        }*/
-
         viewBinding.mainActivitySettings.setOnClickListener {
             openSettings()
         }

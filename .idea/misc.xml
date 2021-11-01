@@ -13,6 +13,7 @@
         <entry key="app/src/main/res/drawable/shape_main_button.xml" value="0.2520833333333333" />
         <entry key="app/src/main/res/drawable/shape_oper_button.xml" value="0.2520833333333333" />
         <entry key="app/src/main/res/layout-land/main_activity.xml" value="0.1609347442680776" />
+        <entry key="app/src/main/res/layout-v26/main_activity.xml" value="0.2078125" />
         <entry key="app/src/main/res/layout/history_activity.xml" value="0.25" />
         <entry key="app/src/main/res/layout/history_item.xml" value="0.2234375" />
         <entry key="app/src/main/res/layout/main_activity.xml" value="0.165" />
