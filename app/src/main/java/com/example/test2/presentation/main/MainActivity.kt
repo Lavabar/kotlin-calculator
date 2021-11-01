@@ -37,10 +37,11 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
 
-        viewBinding.inputEdit.apply {
+        /*viewBinding.inputEdit.apply {
             showSoftInputOnFocus = false
             isCursorVisible = false
-        }
+        }*/
+
         viewBinding.mainActivitySettings.setOnClickListener {
             openSettings()
         }
@@ -90,7 +91,7 @@ class MainActivity : BaseActivity() {
         }
 
         viewModel.expressionState.observe(this) { state ->
-            viewBinding.inputEdit.setText(state)
+            viewBinding.inputEdit.text = state
         }
         viewModel.resultState.observe(this) { state ->
             viewBinding.outputTextView.text = state
