@@ -19,10 +19,12 @@
         </activity>
 
         <activity android:name=".presentation.settings.SettingsActivity"
-            android:exported="false"/>
+            android:exported="false"
+            android:screenOrientation="sensorPortrait"/>
 
         <activity android:name=".presentation.history.HistoryActivity"
-            android:exported="false"/>
+            android:exported="false"
+            android:screenOrientation="sensorPortrait"/>
     </application>
 
 </manifest>
