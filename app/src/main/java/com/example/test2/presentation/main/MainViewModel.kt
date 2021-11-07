@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.test2.data.CalculateExpression
+import com.example.test2.domain.CalculateExpression
 import com.example.test2.domain.HistoryRepository
 import com.example.test2.domain.SettingsDao
 import com.example.test2.domain.entity.HistoryItem
@@ -18,6 +18,7 @@ class MainViewModel (
         ): ViewModel() {
 
     private var expression: String = ""
+    private var inputNumber: String = ""
     private val _expressionState = MutableLiveData<String>()
     val expressionState: LiveData<String> = _expressionState
 
@@ -37,13 +38,21 @@ class MainViewModel (
 
     fun onNumberClicked(number: Int) {
         if (expression != "Infinity") {
+            if (number.toDouble() ==
+                calculator.fastEvaluateCheck(inputNumber + number.toString())) {
+                    if (inputNumber.isNotBlank())
+                        expression = expression.dropLast(1)
+                    inputNumber = number.toString()
+            } else {
+                inputNumber += number.toString()
+            }
             expression += number.toString()
-            _expressionState.value = expression
         } else {
+            inputNumber = number.toString()
             expression = number.toString()
-            _expressionState.value = expression
             _resultState.value = ""
         }
+        _expressionState.value = expression
     }
 
     fun onResultClicked() {
@@ -56,12 +65,14 @@ class MainViewModel (
         expression = result
         _expressionState.value = expression
         _resultState.value = expression
+        inputNumber = ""
     }
 
     fun onAllClearClicked() {
         _resultState.value = ""
         expression = ""
         _expressionState.value = expression
+        inputNumber = ""
     }
 
     fun onOperationClicked(operation: String) {
@@ -70,16 +81,19 @@ class MainViewModel (
             expression += operation
             _expressionState.value = expression
         }
+        inputNumber = ""
     }
 
     fun onClearClicked() {
         _resultState.value = ""
         expression = calculator.zeroLastOperand(expression)
         _expressionState.value = expression
+        inputNumber = "0"
     }
 
     fun onPointClicked() {
         if (expression.isNotBlank() && expression.last().isDigit()) {
+            inputNumber += "."
             expression += "."
             _expressionState.value = expression
         }

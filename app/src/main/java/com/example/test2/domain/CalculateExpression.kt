@@ -1,4 +1,4 @@
-package com.example.test2.data
+package com.example.test2.domain
 
 import com.fathzer.soft.javaluator.DoubleEvaluator
 import java.math.BigDecimal
@@ -37,13 +37,17 @@ class CalculateExpression {
                     || expression.endsWith("/")
                     || expression.endsWith("^") -> return expression.plus("0")
             expression.last().isDigit() -> {
-                return expression.replaceRange(getLastOperand(expression), "0")
+                return expression.replaceRange(getLastOperandRange(expression), "0")
             }
         }
         return expression
     }
 
-    private fun getLastOperand(expression: String): IntRange {
+    private fun getLastOperandRange(expression: String): IntRange {
         return operandRegex.findAll(expression).last().range
+    }
+
+    fun fastEvaluateCheck(operand: String): Double {
+        return evaluator.evaluate(operand)
     }
 }

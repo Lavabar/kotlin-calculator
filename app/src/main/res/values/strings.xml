@@ -26,7 +26,7 @@
     <string name="settings_result_ok">Ok</string>
     <string name="settings_result_cancel">Cancel</string>
     <string name="result_panel_dialog_title">Result Panel</string>
-    <string name="history_title">История</string>
+    <string name="history_title">History</string>
     <string name="all_clear_space">AC</string>
     <string-array name="result_panel_types">
         <item>On the left</item>
