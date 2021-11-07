@@ -27,8 +27,6 @@ class MainViewModel (
     private val _resultPanelState = MutableLiveData<ResultPanelType>()
     val resultPanelState: LiveData<ResultPanelType> = _resultPanelState
 
-    private val _calcState = MutableLiveData<String>()
-
     private val calculator = CalculateExpression()
 
     init {
@@ -50,30 +48,33 @@ class MainViewModel (
 
     fun onResultClicked() {
         val result = calculator.calculateExpression(expression)
-        viewModelScope.launch {
-            historyRepository.add(HistoryItem(expression, result))
+        if (("" != expression || "0" != expression) && "0" != result) {
+            viewModelScope.launch {
+                historyRepository.add(HistoryItem(expression, result))
+            }
         }
-        _calcState.value = result
-        expression = _calcState.value.toString()
+        expression = result
         _expressionState.value = expression
         _resultState.value = expression
     }
 
-    fun onClearClicked() {
+    fun onAllClearClicked() {
         _resultState.value = ""
+        expression = ""
+        _expressionState.value = expression
     }
 
     fun onOperationClicked(operation: String) {
         if (expression.isNotBlank() && (expression.last().isDigit() || expression.endsWith("."))) {
-            _calcState.value = calculator.calculateExpression(expression)
-            _resultState.value = _calcState.value
+            _resultState.value = calculator.calculateExpression(expression)
             expression += operation
             _expressionState.value = expression
         }
     }
 
-    fun onBackClicked() {
-        expression = expression.dropLast(1)
+    fun onClearClicked() {
+        _resultState.value = ""
+        expression = calculator.zeroLastOperand(expression)
         _expressionState.value = expression
     }
 

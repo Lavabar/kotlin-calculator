@@ -58,8 +58,8 @@ class MainActivity : BaseActivity() {
             operationView.setOnClickListener { viewModel.onOperationClicked(operationView.contentDescription.toString()) }
         }
 
-        viewBinding.mainClear.setOnClickListener {
-            viewModel.onClearClicked()
+        viewBinding.mainAllClear.setOnClickListener {
+            viewModel.onAllClearClicked()
         }
 
         listOf(
@@ -77,8 +77,8 @@ class MainActivity : BaseActivity() {
             textView.setOnClickListener { viewModel.onNumberClicked(index) }
         }
 
-        viewBinding.mainBack.setOnClickListener {
-            viewModel.onBackClicked()
+        viewBinding.mainClear.setOnClickListener {
+            viewModel.onClearClicked()
         }
 
         viewBinding.mainPoint.setOnClickListener {

@@ -8,7 +8,7 @@ class CalculateExpression {
 
     private val mc = MathContext(5)
     private val evaluator = DoubleEvaluator(DoubleEvaluator.getDefaultParameters(), true)
-
+    private val operandRegex = """[0-9]+(?:\.[0-9]*)?(?:E[+-][0-9]+)?""".toRegex()
     /**
      * Рассчитывает значение выражения [expression]
      */
@@ -27,5 +27,23 @@ class CalculateExpression {
         val result = BigDecimal(evaluator.evaluate(preparedExpression), mc)
 
         return result.toString();
+    }
+
+    fun zeroLastOperand(expression: String): String {
+        when {
+            expression.endsWith("+")
+                    || expression.endsWith("-")
+                    || expression.endsWith("*")
+                    || expression.endsWith("/")
+                    || expression.endsWith("^") -> return expression.plus("0")
+            expression.last().isDigit() -> {
+                return expression.replaceRange(getLastOperand(expression), "0")
+            }
+        }
+        return expression
+    }
+
+    private fun getLastOperand(expression: String): IntRange {
+        return operandRegex.findAll(expression).last().range
     }
 }

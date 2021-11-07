@@ -59,18 +59,17 @@
                 android:layout_weight="1"
                 android:text="@string/equals"/>
             <TextView
+                android:id="@+id/main_all_clear"
+                style="@style/LandButton.Function"
+                android:layout_weight="1"
+                android:text="@string/all_clear_space"/>
+
+            <TextView
                 android:id="@+id/main_clear"
                 style="@style/LandButton.Function"
                 android:layout_weight="1"
-                android:text="@string/clear_space"/>
-
-            <ImageView
-                android:id="@+id/main_back"
-                style="@style/LandButton.Function"
-                android:layout_weight="1"
-                android:contentDescription="@string/back"
-                app:srcCompat="@drawable/ic_baseline_backspace_24"
-                android:scaleType="center"/>
+                android:text="@string/clear_space"
+                />
 
             <TextView
                 android:id="@+id/main_memorize"
