@@ -28,6 +28,8 @@ class MainViewModel (
     private val _resultPanelState = MutableLiveData<ResultPanelType>()
     val resultPanelState: LiveData<ResultPanelType> = _resultPanelState
 
+    private val precision = 3
+
     private val calculator = CalculateExpression()
 
     init {
@@ -40,9 +42,13 @@ class MainViewModel (
         if (expression != "Infinity") {
             if (number.toDouble() ==
                 calculator.fastEvaluateCheck(inputNumber + number.toString())) {
-                    if (inputNumber.isNotBlank())
+                    if (inputNumber.isNotBlank() && !inputNumber.contains(".")) {
                         expression = expression.dropLast(1)
-                    inputNumber = number.toString()
+                    }
+                    if (number == 0)
+                        inputNumber += number.toString()
+                    else
+                        inputNumber = number.toString()
             } else {
                 inputNumber += number.toString()
             }
@@ -56,7 +62,7 @@ class MainViewModel (
     }
 
     fun onResultClicked() {
-        val result = calculator.calculateExpression(expression)
+        val result = calculator.calculateExpression(expression, precision)
         if (("" != expression || "0" != expression) && "0" != result) {
             viewModelScope.launch {
                 historyRepository.add(HistoryItem(expression, result))
@@ -65,7 +71,7 @@ class MainViewModel (
         expression = result
         _expressionState.value = expression
         _resultState.value = expression
-        inputNumber = ""
+        inputNumber = result
     }
 
     fun onAllClearClicked() {
@@ -77,7 +83,7 @@ class MainViewModel (
 
     fun onOperationClicked(operation: String) {
         if (expression.isNotBlank() && (expression.last().isDigit() || expression.endsWith("."))) {
-            _resultState.value = calculator.calculateExpression(expression)
+            _resultState.value = calculator.calculateExpression(expression, precision)
             expression += operation
             _expressionState.value = expression
         }

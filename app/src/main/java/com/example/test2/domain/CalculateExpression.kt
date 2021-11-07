@@ -3,17 +3,19 @@ package com.example.test2.domain
 import com.fathzer.soft.javaluator.DoubleEvaluator
 import java.math.BigDecimal
 import java.math.MathContext
+import java.math.RoundingMode
+import kotlin.math.abs
+import kotlin.math.pow
 
 class CalculateExpression {
 
-    private val mc = MathContext(5)
     private val evaluator = DoubleEvaluator(DoubleEvaluator.getDefaultParameters(), true)
     private val operandRegex = """[0-9]+(?:\.[0-9]*)?(?:E[+-][0-9]+)?""".toRegex()
     /**
      * Рассчитывает значение выражения [expression]
      */
-    fun calculateExpression(expression: String): String {
-
+    fun calculateExpression(expression: String, withPrecision: Int): String {
+        val mc = MathContext(withPrecision + 1)
         var preparedExpression: String = expression
 
         if (expression.isBlank()) return ""
@@ -25,8 +27,13 @@ class CalculateExpression {
             expression.endsWith("/") -> preparedExpression = "1"
         }
         val result = BigDecimal(evaluator.evaluate(preparedExpression), mc)
+        //val result = evaluator.evaluate(preparedExpression)
 
-        return result.toString();
+        return if (result < BigDecimal.valueOf(abs((10.0).pow(withPrecision)))) {
+            String.format("%.${withPrecision}f", result)
+        } else {
+            result.toString()
+        }
     }
 
     fun zeroLastOperand(expression: String): String {
