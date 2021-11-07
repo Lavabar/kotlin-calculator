@@ -9,7 +9,9 @@ import com.example.test2.domain.CalculateExpression
 import com.example.test2.domain.HistoryRepository
 import com.example.test2.domain.SettingsDao
 import com.example.test2.domain.entity.HistoryItem
+import com.example.test2.domain.entity.PrecisionValue
 import com.example.test2.domain.entity.ResultPanelType
+import com.example.test2.domain.entity.VibrationFeedbackValue
 import kotlinx.coroutines.launch
 
 class MainViewModel (
@@ -28,13 +30,24 @@ class MainViewModel (
     private val _resultPanelState = MutableLiveData<ResultPanelType>()
     val resultPanelState: LiveData<ResultPanelType> = _resultPanelState
 
-    private val precision = 3
+    private val _precisionValue = MutableLiveData<Int>()
+    private val precisionValue: LiveData<Int> = _precisionValue
+
+    private val _vibrationFeedbackValue = MutableLiveData<VibrationFeedbackValue>()
+    val vibrationFeedbackValue: LiveData<VibrationFeedbackValue> = _vibrationFeedbackValue
 
     private val calculator = CalculateExpression()
 
     init {
         viewModelScope.launch {
             _resultPanelState.value = settingsDao.getResultPanelType()
+            _precisionValue.value = when (settingsDao.getPrecisionValue()) {
+                PrecisionValue.THREE -> 3
+                PrecisionValue.FOUR -> 4
+                PrecisionValue.FIVE -> 5
+                PrecisionValue.SIX -> 6
+            }
+            _vibrationFeedbackValue.value = settingsDao.getVibrationFeedback()
         }
     }
 
@@ -62,7 +75,7 @@ class MainViewModel (
     }
 
     fun onResultClicked() {
-        val result = calculator.calculateExpression(expression, precision)
+        val result = calculator.calculateExpression(expression, precisionValue.value ?: 3)
         if (("" != expression || "0" != expression) && "0" != result) {
             viewModelScope.launch {
                 historyRepository.add(HistoryItem(expression, result))
@@ -83,7 +96,7 @@ class MainViewModel (
 
     fun onOperationClicked(operation: String) {
         if (expression.isNotBlank() && (expression.last().isDigit() || expression.endsWith("."))) {
-            _resultState.value = calculator.calculateExpression(expression, precision)
+            _resultState.value = calculator.calculateExpression(expression, precisionValue.value ?: 3)
             expression += operation
             _expressionState.value = expression
         }
@@ -113,6 +126,14 @@ class MainViewModel (
     fun onStart() {
         viewModelScope.launch {
             _resultPanelState.value = settingsDao.getResultPanelType()
+            _precisionValue.value = when(settingsDao.getPrecisionValue()) {
+                PrecisionValue.THREE -> 3
+                PrecisionValue.FOUR -> 4
+                PrecisionValue.FIVE -> 5
+                PrecisionValue.SIX -> 6
+            }
+            _vibrationFeedbackValue.value = settingsDao.getVibrationFeedback()
+            _resultState.value = ""
         }
     }
 

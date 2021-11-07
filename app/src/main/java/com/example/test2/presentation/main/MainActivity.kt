@@ -1,8 +1,13 @@
 package com.example.test2.presentation.main
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.VibratorManager
 import android.view.Gravity
+import android.view.MenuItem
+import android.widget.PopupMenu
 import androidx.activity.result.launch
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
@@ -14,11 +19,13 @@ import com.example.test2.databinding.MainActivityBinding
 import com.example.test2.di.HistoryRepositoryProvider
 import com.example.test2.di.SettingsDaoProvider
 import com.example.test2.domain.entity.ResultPanelType
+import com.example.test2.domain.entity.VibrationFeedbackValue
 import com.example.test2.presentation.common.BaseActivity
 import com.example.test2.presentation.history.HistoryResult
 import com.example.test2.presentation.settings.SettingsActivity
 
-class MainActivity : BaseActivity() {
+
+class MainActivity : BaseActivity()/*, PopupMenu.OnMenuItemClickListener*/ {
 
     private val viewBinding by viewBinding(MainActivityBinding::bind)
     private val viewModel by viewModels<MainViewModel> {
@@ -30,22 +37,34 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    private var vibrationEffect: VibrationEffect? = null
+
     private val resultLauncher = registerForActivityResult(HistoryResult()) { item ->
         viewModel.onHistoryResult(item)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val vibratorManager = this.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+        val vibrator = vibratorManager.defaultVibrator
+
         setContentView(R.layout.main_activity)
 
         viewBinding.mainActivitySettings.setOnClickListener {
+            vibrator.cancel()
+            vibrator.vibrate(vibrationEffect)
             openSettings()
         }
 
         viewBinding.mainActivityHistory.setOnClickListener {
+            vibrator.cancel()
+            vibrator.vibrate(vibrationEffect)
             openHistory()
         }
 
         viewBinding.mainEquals.setOnClickListener {
+            vibrator.cancel()
+            vibrator.vibrate(vibrationEffect)
             viewModel.onResultClicked()
         }
 
@@ -53,12 +72,19 @@ class MainActivity : BaseActivity() {
             viewBinding.mainPlus,
             viewBinding.mainMinus,
             viewBinding.mainMultiply,
-            viewBinding.mainDivide
+            viewBinding.mainDivide,
+            viewBinding.mainPow
         ).forEach { operationView ->
-            operationView.setOnClickListener { viewModel.onOperationClicked(operationView.contentDescription.toString()) }
+            operationView.setOnClickListener {
+                vibrator.cancel()
+                vibrator.vibrate(vibrationEffect)
+                viewModel.onOperationClicked(operationView.contentDescription.toString())
+            }
         }
 
         viewBinding.mainAllClear.setOnClickListener {
+            vibrator.cancel()
+            vibrator.vibrate(vibrationEffect)
             viewModel.onAllClearClicked()
         }
 
@@ -74,16 +100,31 @@ class MainActivity : BaseActivity() {
             viewBinding.mainEight,
             viewBinding.mainNine
         ).forEachIndexed { index, textView ->
-            textView.setOnClickListener { viewModel.onNumberClicked(index) }
+            textView.setOnClickListener {
+                vibrator.cancel()
+                vibrator.vibrate(vibrationEffect)
+                viewModel.onNumberClicked(index)
+            }
         }
 
         viewBinding.mainClear.setOnClickListener {
+            vibrator.cancel()
+            vibrator.vibrate(vibrationEffect)
             viewModel.onClearClicked()
         }
 
         viewBinding.mainPoint.setOnClickListener {
+            vibrator.cancel()
+            vibrator.vibrate(vibrationEffect)
             viewModel.onPointClicked()
         }
+
+        /*viewBinding.mainPow.setOnLongClickListener {
+            vibrator.cancel()
+            vibrator.vibrate(vibrationEffect)
+            showPowMenu()
+            return@setOnLongClickListener true
+        }*/
 
         viewModel.expressionState.observe(this) { state ->
             viewBinding.inputEdit.text = state
@@ -103,6 +144,15 @@ class MainActivity : BaseActivity() {
             }
         }
 
+        viewModel.vibrationFeedbackValue.observe(this) {
+            vibrationEffect = when (it) {
+                VibrationFeedbackValue.HARD -> VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK)
+                VibrationFeedbackValue.MEDIUM -> VibrationEffect.createOneShot(1000,
+                    VibrationEffect.DEFAULT_AMPLITUDE)
+                VibrationFeedbackValue.LOW -> VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK)
+            }
+        }
+
     }
 
     override fun onStart() {
@@ -115,5 +165,27 @@ class MainActivity : BaseActivity() {
     private fun openSettings() {
         startActivity(Intent(this, SettingsActivity::class.java))
     }
+
+    /*private fun showPowMenu() {
+        PopupMenu(this, viewBinding.mainPow).apply {
+            setOnMenuItemClickListener(this@MainActivity)
+            inflate(R.menu.actions)
+            show()
+        }
+    }
+
+    override fun onMenuItemClick(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.archive -> {
+                archive(item)
+                true
+            }
+            R.id.delete -> {
+                delete(item)
+                true
+            }
+            else -> false
+        }
+    }*/
 }
 

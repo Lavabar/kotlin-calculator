@@ -72,10 +72,11 @@
                 />
 
             <TextView
-                android:id="@+id/main_memorize"
-                style="@style/LandButton.Function"
+                android:id="@+id/main_pow"
+                style="@style/LandButton.Operation"
                 android:layout_weight="1"
-                android:text="@string/memo_button"/>
+                android:text="@string/pow"
+                android:contentDescription="@string/pow_sign"/>
 
             <TextView
                 android:id="@+id/main_divide"

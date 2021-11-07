@@ -2,7 +2,9 @@ package com.example.test2.data
 
 import android.content.SharedPreferences
 import com.example.test2.domain.SettingsDao
+import com.example.test2.domain.entity.PrecisionValue
 import com.example.test2.domain.entity.ResultPanelType
+import com.example.test2.domain.entity.VibrationFeedbackValue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -21,8 +23,32 @@ class SettingsDaoImpl(
             ?.let { ResultPanelType.valueOf(it) } ?: ResultPanelType.LEFT
     }
 
+    override suspend fun setPrecisionValue(precisionValue: PrecisionValue) =
+        withContext(Dispatchers.IO) {
+            preferences.edit().putString(PRECISION_VALUE_KEY, precisionValue.name).apply()
+        }
+
+    override suspend fun getPrecisionValue(): PrecisionValue =
+        withContext(Dispatchers.IO) {
+            preferences.getString(PRECISION_VALUE_KEY, null)?.let { PrecisionValue.valueOf(it) } ?: PrecisionValue.THREE
+        }
+
+    override suspend fun setVibrationFeedback(vibrationFeedbackValue: VibrationFeedbackValue) =
+        withContext(Dispatchers.IO) {
+            preferences.edit().putString(VIBRATION_FEEDBACK_VALUE_KEY,
+                vibrationFeedbackValue.name).apply()
+        }
+
+    override suspend fun getVibrationFeedback(): VibrationFeedbackValue =
+        withContext(Dispatchers.IO) {
+            preferences.getString(VIBRATION_FEEDBACK_VALUE_KEY, null)
+                ?.let { VibrationFeedbackValue.valueOf(it) } ?: VibrationFeedbackValue.MEDIUM
+        }
+
     companion object {
         private const val RESULT_PANEL_TYPE_KEY = "RESULT_PANEL_TYPE_KEY"
+        private const val PRECISION_VALUE_KEY = "PRECISION_VALUE_KEY"
+        private const val VIBRATION_FEEDBACK_VALUE_KEY = "VIBRATION_FEEDBACK_VALUE_KEY"
     }
 
 }

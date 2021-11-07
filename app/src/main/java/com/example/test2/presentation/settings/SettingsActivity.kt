@@ -10,7 +10,9 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.test2.R
 import com.example.test2.databinding.SettingsActivityBinding
 import com.example.test2.di.SettingsDaoProvider
+import com.example.test2.domain.entity.PrecisionValue
 import com.example.test2.domain.entity.ResultPanelType
+import com.example.test2.domain.entity.VibrationFeedbackValue
 
 
 class SettingsActivity : BaseActivity() {
@@ -42,16 +44,59 @@ class SettingsActivity : BaseActivity() {
             viewBinding.resultPanelDescription.text =
                 resources.getStringArray(R.array.result_panel_types)[state.ordinal]
         }
-        viewModel.openResultPaneAction.observe(this) { type ->
-            showDialog(type)
+        viewModel.openResultPanelAction.observe(this) { type ->
+            showDialogResultPanelType(type)
         }
+
+        viewBinding.setPrecision.setOnClickListener {
+            viewModel.onPrecisionValueClick()
+        }
+        viewModel.precisionValue.observe(this) { state ->
+
+            viewBinding.setPrecisionDescription.text =
+                resources.getStringArray(R.array.precision_values)[state.ordinal]
+        }
+        viewModel.openPrecisionValueAction.observe(this) { value ->
+            showDialogPrecisionValue(value)
+        }
+
+        viewBinding.vibrationFeedback.setOnClickListener {
+            viewModel.onVibrationFeedbackValueClick()
+        }
+        viewModel.vibrationFeedbackValue.observe(this) { state ->
+
+            viewBinding.vibrationFeedbackDescription.text =
+                resources.getStringArray(R.array.vibration_feedback_values)[state.ordinal]
+        }
+        viewModel.openVibrationFeedbackValueAction.observe(this) { type ->
+            showDialogVibrationFeedbackValue(type)
+        }
+
     }
 
-    private fun showDialog(type: ResultPanelType) {
+    private fun showDialogResultPanelType(type: ResultPanelType) {
         AlertDialog.Builder(this)
             .setTitle(getString(R.string.result_panel_dialog_title))
-            .setSingleChoiceItems(R.array.result_panel_types, type.ordinal){ dialog, id ->
+            .setSingleChoiceItems(R.array.result_panel_types, type.ordinal){ _, id ->
                 viewModel.onResultPanelTypeChanged(ResultPanelType.values()[id])
+            }
+            .show()
+    }
+
+    private fun showDialogPrecisionValue(value: PrecisionValue) {
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.precision_dialog_title))
+            .setSingleChoiceItems(R.array.precision_values, value.ordinal){ _, id ->
+                viewModel.onPrecisionValueChanged(PrecisionValue.values()[id])
+            }
+            .show()
+    }
+
+    private fun showDialogVibrationFeedbackValue(type: VibrationFeedbackValue) {
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.vibration_feedback_dialog_title))
+            .setSingleChoiceItems(R.array.vibration_feedback_values, type.ordinal){ _, id ->
+                viewModel.onVibrationFeedbackValueChanged(VibrationFeedbackValue.values()[id])
             }
             .show()
     }

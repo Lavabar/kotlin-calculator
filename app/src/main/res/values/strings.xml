@@ -26,11 +26,28 @@
     <string name="settings_result_ok">Ok</string>
     <string name="settings_result_cancel">Cancel</string>
     <string name="result_panel_dialog_title">Result Panel</string>
+    <string name="precision_dialog_title">Calculation Precision</string>
+    <string name="vibration_feedback_dialog_title">Vibration Feedback Value</string>
     <string name="history_title">History</string>
     <string name="all_clear_space">AC</string>
+    <string name="calculation_precision">Calculation precision</string>
+    <string name="vibration_feedback">Vibration feedback</string>
+    <string name="pow">pow</string>
+    <string name="pow_sign">^</string>
     <string-array name="result_panel_types">
         <item>On the left</item>
         <item>On the right</item>
         <item>Hidden</item>
+    </string-array>
+    <string-array name="precision_values">
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
+    <string-array name="vibration_feedback_values">
+        <item>High</item>
+        <item>Medium</item>
+        <item>Low</item>
     </string-array>
 </resources>
