@@ -144,4 +144,12 @@ class MainViewModel (
             _resultState.value = item.result
         }
     }
+
+    fun onDefaultPowClicked(suffix: String) {
+        if (expression.isNotBlank() && (expression.last().isDigit() || expression.endsWith("."))) {
+            expression = "($expression)$suffix"
+            _expressionState.value = expression
+        }
+        inputNumber = suffix.drop(1)
+    }
 }

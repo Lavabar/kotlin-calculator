@@ -83,4 +83,14 @@
         <item name="android:theme">@style/SelectableItemTheme</item>
         <item name="android:background">?attr/selectableItemBackground</item>
     </style>
+    <style name="AppTheme" parent="@style/Theme.Test2">
+        <item name="android:popupMenuStyle">@style/PopupMenu</item>
+        <item name="android:textAppearanceLargePopupMenu">@style/myPopupMenuTextAppearanceColor</item>
+    </style>
+    <style name="PopupMenu" parent="@android:style/Widget.PopupMenu">
+        <item name="android:popupBackground">@color/black</item>
+    </style>
+    <style name="myPopupMenuTextAppearanceColor" parent="@style/TextAppearance.AppCompat.Light.Widget.PopupMenu.Large">
+        <item name="android:textColor">@color/white</item>
+    </style>
 </resources>

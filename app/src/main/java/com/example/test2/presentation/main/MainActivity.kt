@@ -25,7 +25,7 @@ import com.example.test2.presentation.history.HistoryResult
 import com.example.test2.presentation.settings.SettingsActivity
 
 
-class MainActivity : BaseActivity()/*, PopupMenu.OnMenuItemClickListener*/ {
+class MainActivity : BaseActivity(), PopupMenu.OnMenuItemClickListener {
 
     private val viewBinding by viewBinding(MainActivityBinding::bind)
     private val viewModel by viewModels<MainViewModel> {
@@ -119,12 +119,12 @@ class MainActivity : BaseActivity()/*, PopupMenu.OnMenuItemClickListener*/ {
             viewModel.onPointClicked()
         }
 
-        /*viewBinding.mainPow.setOnLongClickListener {
+        viewBinding.mainPow.setOnLongClickListener {
             vibrator.cancel()
             vibrator.vibrate(vibrationEffect)
             showPowMenu()
             return@setOnLongClickListener true
-        }*/
+        }
 
         viewModel.expressionState.observe(this) { state ->
             viewBinding.inputEdit.text = state
@@ -166,26 +166,26 @@ class MainActivity : BaseActivity()/*, PopupMenu.OnMenuItemClickListener*/ {
         startActivity(Intent(this, SettingsActivity::class.java))
     }
 
-    /*private fun showPowMenu() {
+    private fun showPowMenu() {
         PopupMenu(this, viewBinding.mainPow).apply {
             setOnMenuItemClickListener(this@MainActivity)
-            inflate(R.menu.actions)
+            inflate(R.menu.pow_menu)
             show()
         }
     }
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.archive -> {
-                archive(item)
+            R.id.pow2 -> {
+                viewModel.onDefaultPowClicked("^2")
                 true
             }
-            R.id.delete -> {
-                delete(item)
+            R.id.pow05 -> {
+                viewModel.onDefaultPowClicked("^0.5")
                 true
             }
             else -> false
         }
-    }*/
+    }
 }
 
