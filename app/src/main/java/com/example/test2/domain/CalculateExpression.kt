@@ -26,13 +26,19 @@ class CalculateExpression {
             expression.endsWith("*") -> preparedExpression = "(" + expression.dropLast(1) + ")^2"
             expression.endsWith("/") -> preparedExpression = "1"
         }
-        val result = BigDecimal(evaluator.evaluate(preparedExpression), mc)
-        //val result = evaluator.evaluate(preparedExpression)
 
-        return if (result < BigDecimal.valueOf(abs((10.0).pow(withPrecision)))) {
-            String.format("%.${withPrecision}f", result)
+        val calculation = evaluator.evaluate(preparedExpression)
+        return if (calculation.toString() == "Error" || calculation.toString() == "Infinity") {
+            calculation.toString()
         } else {
-            result.toString()
+            val result = BigDecimal(calculation, mc)
+            //val result = evaluator.evaluate(preparedExpression)
+
+            if (result < BigDecimal.valueOf(abs((10.0).pow(withPrecision)))) {
+                String.format("%.${withPrecision}f", result)
+            } else {
+                result.toString()
+            }
         }
     }
 

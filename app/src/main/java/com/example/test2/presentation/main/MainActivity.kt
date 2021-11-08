@@ -37,7 +37,7 @@ class MainActivity : BaseActivity(), PopupMenu.OnMenuItemClickListener {
         }
     }
 
-    private var vibrationEffect: VibrationEffect? = null
+    private lateinit var vibrationEffect: VibrationEffect
 
     private val resultLauncher = registerForActivityResult(HistoryResult()) { item ->
         viewModel.onHistoryResult(item)
@@ -46,7 +46,7 @@ class MainActivity : BaseActivity(), PopupMenu.OnMenuItemClickListener {
         super.onCreate(savedInstanceState)
 
         val vibratorManager = this.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
-        val vibrator = vibratorManager.defaultVibrator
+        val vibrator = vibratorManager.getDefaultVibrator()
 
         setContentView(R.layout.main_activity)
 
